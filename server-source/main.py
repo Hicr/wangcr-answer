@@ -1,9 +1,8 @@
+# -*- coding: UTF-8 -*-
 #!/usr/bin/python3
-import pymysql
 import flask
 import json
 import datetime
-import uuid
 from functools import wraps
 from flask import make_response,jsonify
 from flask_cors import *

@@ -3,6 +3,8 @@ use chartGPT create answer
 
 本项目前提为已有ChartGPT账号
 
+![](./media/Snipaste_2023-03-05_17-46-17.png)
+
 ## 使用本项目
 
 1.拉取代码
