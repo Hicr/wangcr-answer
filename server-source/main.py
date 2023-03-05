@@ -6,6 +6,7 @@ import datetime
 import uuid
 from functools import wraps
 from flask import make_response,jsonify
+from flask_cors import *
 # 加载 openai 依赖
 import openai
 # 用于读取配置文件
@@ -18,14 +19,15 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 # 初始化web
 server = flask.Flask(__name__)
-
+# 跨域
+CORS(server, supports_credentials=True)
 
 def allow_cross_domain(fun):
     @wraps(fun)
     def wrapper_fun(*args, **kwargs):
         rst = make_response(fun(*args, **kwargs))
         rst.headers['Access-Control-Allow-Origin'] = '*'
-        rst.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
+        rst.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE,OPTIONS'
         allow_headers = "Referer,Accept,Origin,User-Agent"
         rst.headers['Access-Control-Allow-Headers'] = allow_headers
         return rst
