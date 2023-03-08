@@ -78,6 +78,7 @@
 <script>
 const qs = require('qs') //引入序列化功能
 import {CHAT_TYPE} from './fb'
+import {KEY,IP } from './delete'
 import { Configuration,OpenAIApi} from "openai"
 export default {
   name: 'answer',
@@ -87,6 +88,7 @@ export default {
     return {
       IP:'http://127.0.0.1:29977',
       // IP:'https://api.openai.com',
+      key:'',
       answerType:[],
       choseType:'/answer/chat/all',
       msg:'',
@@ -99,16 +101,21 @@ export default {
   watch: {},
   created() {
     this.answerType = CHAT_TYPE
+    this.IP = IP
+    this.key = KEY
   },
   mounted() {
   },
   methods: {
     async openDemo(){
-      const configuration = new Configuration({
-        apiKey: "sk-XXXX",
-      });
-      const openai = new OpenAIApi(configuration);
-      const response = await openai.listEngines();
+      console.log("&&&&&&&&&&&&&&&&&&")
+      console.log(this.IP)
+      console.log(this.key)
+      // const configuration = new Configuration({
+      //   apiKey: this.key,
+      // });
+      // const openai = new OpenAIApi(configuration);
+      // const response = await openai.listEngines();
     },
     sendMsgWithNode(){
       if(this.choseType != null && this.msg.length > 0){
@@ -145,11 +152,12 @@ export default {
 
 
         this.historyList.push(me)
+        const auth = 'Bearer ' + this.key
       // https://api.openai.com/v1/chat/completions
         this.$request.post(this.IP + "/v1/chat/completions",chat_data,{
           headers:{
             'Content-Type' : 'application/json',
-            'Authorization':'Bearer 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'
+            'Authorization': auth
           }
         }).then((res) => {
           // 成功 将返回结果插入历史
